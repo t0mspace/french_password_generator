@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link
+            rel="stylesheet"
+            href="//cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    >
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body class="container">
+<p>You'd like a nice password but for you english is like chinese ? <br>
+Autrement dit, vous ne comprenez rien à l'anglais mais vous voudriez un chouette mot de passe ?<br>
+Manque de pot les générateurs de mots de passe sur internet sont tous en anglais ... sauf celui-ci ;)
+</p>
+<h1>Générateur de mots de passe aléatoires pour anglophobes</h1>
+
+
+<h2>Mot de passe généré</h2>
+
+<input type="text" name="new_password" size="50" readonly>
+
+
+<button type="button" name="btn-generate-new-password">Afficher un (autre) mot de passe</button>
+<button type="button" name="btn-copy-password">Celui-là me plait bien, je prends</button>
+<button type="button" name="btn-reset">Recommencer tout</button>
+
+
+<h2>Options</h2>
+<h3>Nombre de mots composant le mot de passe</h3>
+<input type="number" max=7 min=1 value="4" name=nbre_mots>
+
+<h3>Utiliser caractère de séparation des mots</h3>
+<div class="radio-container">
+    <input type="radio" id="tiret" name="separation" value="-">
+    <label for="separation">tiret (-)</label><br>
+    <input type="radio" id="underscore" name="separation" value="_">
+    <label for="separation"> _ (underscore)</label><br>
+</div>
+
+<h3>Utiliser un caractère spécial</h3>
+<div id="choice_spec_char" class="radio-container">
+    <input type="radio" id="diese" name="spec_char" value="#">
+    <label for="spec_char"> # </label><br>
+    <input type="radio" id="exclamation" name="spec_char" value="!">
+    <label for="spec_char"> ! </label><br>
+    <input type="radio" id="arobase" name="spec_char" value="@">
+    <label for="spec_char"> @ </label><br>
+</div>
+
+<h3>Utiliser des majuscules</h3>
+
+<div class="radio-container">
+    <input type="radio" id="true" name="majuscules" value=true>
+    <label for="majuscules">Oui</label><br>
+    <input type="radio" id="false" name="majuscules" value=false>
+    <label for="majuscules"> Non</label><br>
+</div>
+<!--<h3>Utiliser des nombres</h3>
+<input type="checkbox" id="nombres" name="nombres" value="nombres">
+<label for="nombres"> Nombres</label><br></label><br>-->
+
+<footer style="text-align: center">
+    Copyright 2025 tomspace
+</footer>
+<script src="scripts.js"></script>
+</body>
+</html>
