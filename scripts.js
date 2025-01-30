@@ -9,6 +9,7 @@ const btnReset = document.querySelector('[name=btn-reset]')
 const separationRadios = document.querySelectorAll('[name=separation]')
 const useMajuscules = document.querySelectorAll('[name=majuscules]')
 const nbreMotsElt = document.querySelector('[name=nbre_mots]')
+const useSpecialCharRadios = document.getElementsByName('spec_char');
 
 btnCopyPassword.addEventListener('click', copyToClipBoard)
 btnGeneratePassword.addEventListener('click', showNewPassword)
@@ -47,6 +48,21 @@ function isUppercaseSelected() {
     else return true
 }
 
+/**
+ *
+ * @returns {null|string}
+ */
+function addSpecialChar() {
+  let selectedChar = null
+  useSpecialCharRadios.forEach(item => {
+    if (item.checked) {
+      selectedChar = item.value
+    }
+  })
+
+  return selectedChar
+}
+
 function addUppercases(word) {
     if (!word) return
     return word.charAt(0).toUpperCase() + word.slice(1)
@@ -78,36 +94,41 @@ async function showNewPassword() {
     }
 }
 
-/**
- * Generates a new password using the wordsList
- * @returns {Promise<string>}
- */
 async function generateNewPassword() {
 
-    const nbreMotsElt = document.querySelector('[name=nbre_mots]')
-    const nbreMotsMaxValue = parseInt(nbreMotsElt.value, 10) || 3 // Default to 3 words if input is invalid
-    const newWords = new Set()
+  const nbreMotsElt = document.querySelector('[name=nbre_mots]')
+  const nbreMotsMaxValue = parseInt(nbreMotsElt.value, 10) || 3 // Default to 3 words if input is invalid
+  const newWords = new Set()
 
-    await prepareData() // Ensure wordsList is populated
+  await prepareData() // Ensure wordsList is populated
 
-    do {
-        const word = wordsList[randomIntByMax(wordsList.length)]
-        if (word) {
-            newWords.add(word)
-        }
-    } while (newWords.size < nbreMotsMaxValue)
+  do {
+    const word = wordsList[randomIntByMax(wordsList.length)]
+    if (word) {
+      newWords.add(word)
+    }
+  } while (newWords.size < nbreMotsMaxValue)
 
-    const newWordsArray = Array.from(newWords)
+  const newWordsArray = Array.from(newWords)
 
-    const newWordsTransformed = newWordsArray.map((word) => {
-        let transformedWord = removeAccents(word)
-        if (isUppercaseSelected()) {
-            transformedWord = addUppercases(transformedWord)
-        }
-        return transformedWord
-    })
+  const newWordsTransformed = newWordsArray.map((word) => {
+    let transformedWord = removeAccents(word)
+    if (isUppercaseSelected()) {
+      transformedWord = addUppercases(transformedWord)
+    }
+    return transformedWord
+  })
 
-    return newWordsTransformed.join(getSeparation() ?? '')
+  const newWordsSepared = newWordsTransformed.join(getSeparation() ?? '')
+
+  const selectedChar = addSpecialChar();
+  let newWordsWithChar=null;
+  if (selectedChar) {
+    const positionSpecialChar = randomIntByMax(newWordsSepared.length - 1)
+    newWordsWithChar = newWordsSepared.slice(0, positionSpecialChar).concat(selectedChar, newWordsSepared.slice(positionSpecialChar))
+  }
+
+  return newWordsWithChar
 }
 
 /**
